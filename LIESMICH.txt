@@ -1,0 +1,198 @@
+FOTOWERK 3.13 – START PER DESKTOP-SYMBOL UNTER WINDOWS
+
+1. ZIP vollständig entpacken (Rechtsklick -> Alle extrahieren).
+2. Den entpackten Ordner FotoWerk an einen dauerhaften Ort legen,
+   z.B. in deinen Dokumente-Ordner. Nicht direkt aus dem ZIP starten.
+3. Einmal auf Einrichten.cmd doppelklicken.
+4. Danach FotoWerk über das Kamera-Symbol auf dem Desktop öffnen.
+
+Im Programmordner entsteht zusätzlich die Verknüpfung "FotoWerk starten".
+Das Programm startet ohne Terminalfenster. Die kurze Einrichtung öffnet
+einmalig eine Konsole und zeigt danach eine Bestätigung an.
+
+VORAUSSETZUNGEN
+Dies ist ein Startpaket für die vorhandene Python-Anwendung, keine eigenständige
+EXE. Python ab Version 3.10 einschließlich Tcl/Tk muss installiert sein.
+Die Installation, mit der dein bisheriges Fotoskript läuft, genügt normalerweise.
+Die Einrichtung prüft OpenCV, Pillow und NumPy. Wenn sie fehlen, bietet sie an,
+eine eigene Umgebung im Programmordner anzulegen und die Bibliotheken aus dem
+Internet herunterzuladen. Das geschieht erst nach deiner Bestätigung.
+Für vorhandene funktionierende Bibliotheken ist kein Download nötig.
+Es werden keine Administratorrechte benötigt und keine Sicherheitsrichtlinien
+geändert. In verwalteten Firmenumgebungen kann die Verknüpfungserstellung
+eingeschränkt sein; die Einrichtung meldet dann den Fehler.
+
+BEDIENUNG
+Nur den Quellordner wählen, Qualität, Zielformat und Größe einstellen, Starten
+anklicken. Die Zielordner-Auswahl und das Anlegen eines Zielordners entfallen.
+Die vorhandenen Funktionen bleiben enthalten: Eckpunkte klicken oder ziehen,
+Adaptives Fadenkreuz, Fenstergröße/Position pro Lauf merken, sichtbare Drehung und Fokus.
+Bei eindeutiger Zuordnung zu einer Ecke laufen die Hilfslinien durch die Mausposition und
+deren beide Nachbarecken. Die gewählte Ecke erhält einen gelben Ring.
+Beim Ziehen bleibt sie aktiv. Bei uneindeutiger Nähe bleibt das normale Kreuz.
+Im Prüffenster: Links/Rechts drehen, Enter speichern, N anderer Vorschlag,
+S überspringen, Esc abbrechen. Hinweise beim Darüberfahren über die Buttons.
+Ausgabe: nur die fertigen Dateien direkt im neuen Unterordner des Quellordners,
+z.B. _cropped_20261024_101530_a1b2c3d4e5. Jeder Lauf bekommt einen neuen Ordner.
+Bei Rekursion werden cropped-Ordner (auch _cropped_ und Groß-/Kleinschreibung)
+samt allen Inhalten ausgelassen. Gleiche Ausgabenamen erhalten Nummernzusätze.
+Zielformat: Unverändert, JPG, PDF oder PNG. PDF erzeugt eine einseitige Datei
+pro Foto. Die Qualitätsstufe wirkt auf die darin eingebettete Bildkodierung;
+das Bild wird danach nicht nochmals komprimiert. Originalqualität bei JPEG
+übernimmt dessen Quantisierung, bei anderen PDF-Quellen wird verlustfrei kodiert.
+Ohne feste Ausgabegröße folgen PDF-Seiten dem Bildformat. Die Prozentziele
+beziehen sich auf die Dateigröße, nicht auf Pixelmaße; sie sind nur Richtwerte.
+PNG/TIFF/BMP bleiben verlustfrei. Die Größe skaliert beide Kantenlängen.
+Kamera- und Aufnahmedaten werden weiter übernommen, soweit unterstützt. Bei PDF
+stehen sie in den PDF-Dokumentinformationen und EXIF-Rohdaten, nicht in den
+üblichen Windows-Fotoeigenschaften. Ultra-HDR wird weiterhin als SDR verarbeitet.
+Die neue Lupe zeigt den Bereich unter dem Fadenkreuz vierfach aus Originalpixeln.
+Sie folgt dem Mauszeiger, auch beim Ziehen, und berücksichtigt die Bilddrehung.
+Vorab-Drehung anhand erkannter aufrechter Gesichter, standardmäßig
+aktiv und in der Oberfläche abschaltbar. Keine sichere Erkennung bedeutet keine
+Drehung. Landschaften, sehr kleine oder verdeckte Gesichter bitte manuell drehen.
+Die Auswertung läuft lokal mit dem beigefügten YuNet-Modell. Keine Foto-Uploads.
+Das Modell und YUNET_LICENSE.txt müssen im Programmordner bleiben.
+Grüne gestrichelte Hilfslinien sind jetzt 2 Pixel dick, wie die rote Begrenzung.
+
+BEI ÄNDERUNGEN
+Den Programmordner nicht nachträglich verschieben. Falls doch, Einrichten.cmd
+am neuen Ort erneut ausführen. Python oder eine eigene .venv ebenfalls nicht
+verschieben; bei einer verschobenen .venv den FotoWerk-Ordner aus dem ZIP frisch
+entpacken und neu einrichten. Neue Script-Versionen können später die Datei
+fotos_beschneiden_v2.py im Programmordner ersetzen.
+
+Das Symbol wurde für FotoWerk gestaltet: Retro-Kamera mit türkisfarbener Linse
+und korallroten Zuschnittecken. Es liegt als Windows-ICO mit mehreren Größen vor.
+
+VALIDIERUNG
+PDF-Qualitätsstufen, eingebettete JPEG-Tabellen, verlustfreie PDF-Bilddaten,
+Metadaten, Konvertierung, rekursive Ausschlüsse und Namenskollisionen wurden
+automatisiert geprüft. PDFs wurden gerendert und visuell kontrolliert.
+Die Lupenkoordinaten wurden für alle vier Drehungen geprüft.
+Die Windows-Verknüpfung und der tatsächliche Start unter Windows konnten in
+der verwendeten Linux-Umgebung nicht praktisch getestet werden.
+
+MODELLQUELLE
+OpenCV Zoo / YuNet, MIT-Lizenz (siehe YUNET_LICENSE.txt):
+https://github.com/opencv/opencv_zoo/tree/main/models/face_detection_yunet
+Datei: face_detection_yunet_2023mar.onnx (232589 Bytes).
+
+UPDATE VON 2.9
+FotoWerk schließen, den Inhalt dieses FotoWerk-Ordners in den vorhandenen
+Programmordner kopieren und vorhandene Dateien ersetzen. Die Desktop-Verknüpfung
+bleibt gültig. Es werden keine neuen Python-Bibliotheken benötigt. Nach dem
+Neustart muss FotoWerk 3.13 im Fenstertitel stehen.
+
+OPTIONALE ORIGINAL-BACKUPS (ab 3.1)
+Checkbox „Originale nach erfolgreichem Speichern in Backup-Unterordner verschieben“:
+In der Oberfläche standardmäßig aktiviert. Wenn aktiviert, werden nur erfolgreich gespeicherte Originale
+bytegetreu in _backup_Datum_Uhrzeit_Kennung im Quellordner verschoben.
+Die Unterordnerstruktur bleibt im Backup erhalten. Übersprungene, fehlerhafte
+und noch nicht bearbeitete Bilder bleiben an ihrem ursprünglichen Ort.
+Bei einem Backup-Fehler bleibt das Original erhalten; der Fehler erscheint im Log.
+Cropped- und Backup-Unterordner werden bei der rekursiven Suche ausgelassen.
+Bei Abbruch bleiben bereits erstellte Ausgaben und Backups bestehen.
+Kommandozeile: zusätzlich --backup-originale verwenden.
+
+NEU IN VERSION 3.3: FREIE GRÖSSE UND FORMAT PRO BILD
+Unter „Ausgabegröße“ stehen DIN A5/A4 und gängige Foto-/Albumformate
+sowie „Freies Format (cm)“ zur Verfügung. Dort Breite und Höhe eingeben;
+Dezimalkomma und Dezimalpunkt werden unterstützt (0,1 bis 200 cm).
+
+Drei Modi für feste Größen:
+- Bild mit weißen Rändern ergänzen: Bildpixel bleiben unverändert; der
+  Prozentregler wird ignoriert. Die zusätzliche Fläche ist weiß. Passt das
+  Bild nicht hinein, wird ein Hinweis angezeigt; es wird nicht verkleinert.
+- Bild proportional auf Größe skalieren: Das gesamte Foto wird eingepasst.
+  Bei abweichendem Seitenverhältnis bleiben weiße Ränder. Kein Verzerren
+  und kein zusätzlicher Beschnitt.
+
+- Bild nichtproportional auf die Größe skalieren: Breite und Höhe werden
+  unabhängig angepasst. Füllt das Zielmaß ohne zusätzliche weiße Ränder;
+  das Seitenverhältnis und damit die Motivproportionen können sich ändern.
+  CLI: --groessenmodus stretch
+
+DPI werden aus dem Quellbild übernommen, nicht auf 300 geändert. Fehlen
+brauchbare DPI, wird bei festen Maßen ein verständlicher Fehler angezeigt,
+weil eine Größe in Zentimetern sonst nur mit einer Annahme möglich wäre.
+PDF-Seiten haben exakt die gewählten Maße. Bilddateien werden auf ganze
+Pixel gerundet. Große Ausgaben über 100 Megapixel werden abgefangen.
+
+Im Prüffenster tauscht „Format drehen (Hoch ↔ Quer)“ nur Breite/Höhe der
+Ausgabe. Das Bild selbst wird nicht gedreht. Das aktuelle Maß und die
+Überschreibung werden angezeigt. Diese Wahl gilt nur für das aktuelle Bild;
+das nächste startet wieder mit der Vorgabe aus den Einstellungen.
+Die vorhandenen Pfeiltasten drehen weiterhin das Bild selbst.
+
+„Größe übernehmen“ erhält das bisherige Verhalten, ohne feste Zielgröße.
+Bei 100 % bleiben die Pixelmaße nach dem Beschnitt erhalten.
+
+CLI-Beispiel:
+--format pdf --seitenformat custom --masse-cm 21 29.7 --groessenmodus pad
+Mit --pruefen kann auch dort das Format je Bild gedreht werden.
+
+Update: FotoWerk schließen und die Dateien im bisherigen Programmordner
+mit den Dateien aus diesem Paket ersetzen. Die Desktop-Verknüpfung bleibt nutzbar.
+
+NEU IN 3.6: BILDOPTIMIERUNG
+Im Prüffenster: Helligkeit (-100 bis +100), Kontrast (0 bis 3), Gamma (0,2 bis 3).
+Neutral: 0 / 1 / 1. Gamma über 1 hellt Mitteltöne auf.
+Vorschau, Lupe und Export berücksichtigen die Einstellungen. Werte werden für
+Folgebilder desselben Durchlaufs automatisch übernommen, auch beim Überspringen.
+Zurücksetzen stellt alle drei Regler neutral; dies gilt ebenfalls für Folgebilder.
+Ein neuer Durchlauf beginnt neutral. Details stehen in README.md.
+
+NEU IN 3.7: AUTOMATIK / FILTER
+Auto-Foto, Schärfen, Sepia, Papier, Farbscan, Graustufen, Schwarzweiß und
+Rauschen mindern. Jede Auswahl erscheint direkt in Bild und Lupe.
+Stärke von 0 bis 100 Prozent; zusätzlich bleiben die manuellen Regler verfügbar.
+„Original vergleichen (nur Vorschau)“ zeigt vorübergehend das Ausgangsbild;
+der Export bleibt korrigiert. „Alles zurücksetzen“ entfernt alle Optimierungen,
+auch für Folgebilder. Details, Wirkungen und Grenzen stehen in README.md.
+
+NEU IN 3.8: WEITERE FOTOEFFEKTE
+Kräftigere Farben, HDR-Effekt, Weichzeichnen, Tiefe (Fokusmitte) und
+KI-Optimierung (Gesichter). Alle mit Vorschau, Stärke und Originalvergleich.
+HDR ist ein Effekt auf SDR-Bildern. Tiefe hält geometrisch die Bildmitte scharf.
+Die KI-Option nutzt YuNet für lokale Gesichtserkennung und gezielte Aufhellung;
+ohne Gesicht oder verfügbares Modell wird Auto-Foto verwendet. Details: README.md.
+
+NEU IN 3.9: EINSTELLBARE KANTENERKENNUNG
+Im Prüffenster „Manuellen Schwellwert verwenden“ aktivieren, Wert 5–250 wählen
+und „Rahmen neu erkennen“ anklicken. Niedrig: auch schwache Übergänge; hoch:
+nur starke Kontraste. Kein Treffer lässt die aktuellen Ecken unverändert.
+Die angewendete Einstellung gilt für Folgebilder. Häkchen entfernen und neu
+erkennen stellt die bisherige Automatik wieder her. CLI: --kantenschwelle 60.
+
+NEU IN 3.10 (ersetzt die Bedienung aus 3.9)
+Kantenschwelle startet bei 60, wirkt automatisch nach 250 ms Eingabepause und
+hat einen eigenen Reset-Button. Checkbox und „Rahmen neu erkennen“ entfallen.
+Kompaktere Maske: gleich große Slider, Hinweise und Aktionen unten,
+„Format drehen“ neben den anderen Aktionsbuttons.
+„Zeige Original“ gedrückt halten zum Vergleichen; Loslassen zeigt die Bearbeitung.
+„Default-Werte“ ersetzt „Alles zurücksetzen“ für die Bildoptimierung.
+Anderer Vorschlag = anderer Rahmen desselben Fotos; Überspringen = nächstes Foto
+ohne Speichern. Die aktuelle Bedienung ist in README.md beschrieben.
+
+NEU IN 3.11: KANTEN-RESET KORRIGIERT
+Reset berechnet Schwelle 60 immer neu. Ohne Treffer erscheint die neutrale
+Startauswahl; ein alter Rahmen bleibt beim Reset nicht mehr stehen.
+Orange: kein aktueller Treffer. Rot: erkannter Rahmen. Status nennt die Schwelle
+und unterscheidet unveränderte Treffer von fehlenden Treffern.
+Zusätzliche schonende Kantenmasken verbessern Vorschläge bei Albumseiten.
+
+NEU IN 3.12: GANZE KANTEN VERSCHIEBEN
+„Ganze Kanten verschieben“ einschalten, direkt auf eine Rahmenkante klicken
+und ziehen. Nahe passende Linien werden gefangen; angrenzende Ecken folgen.
+„Kantenfang (px)“ steuert die Suchweite (0 = ohne Einrasten, Standard 12).
+Die Kantenschwelle steuert weiterhin die Erkennung, nicht die Rahmenposition.
+Grüne Linien zeigen die erkannten Kandidaten; die Anzeige ist abschaltbar.
+Zusätzliche Geradenerkennung überbrückt kurze Lücken und liefert weitere
+Rahmenvorschläge. Hinweise und Grenzen sind in README.md beschrieben.
+
+NEU IN 3.13 (ersetzt den Kantenmodus aus 3.12)
+Beliebiger Klick: nächste Ecke setzen und bei gedrückter Maus weiterziehen.
+Direkt auf der mittleren Kante ziehen: ganze Kante verschieben und einrasten.
+Die äußeren 10 Prozent jeder Kante gehören zum Eckpunkt; dieser hat Vorrang.
+Kein Modusschalter und keine grünen Erkennungslinien mehr. Kantenfang-Regler bleibt.
