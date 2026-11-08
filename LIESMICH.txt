@@ -1,4 +1,4 @@
-FOTOWERK 3.13 – START PER DESKTOP-SYMBOL UNTER WINDOWS
+FOTOWERK 3.17 – START PER DESKTOP-SYMBOL UNTER WINDOWS
 
 1. ZIP vollständig entpacken (Rechtsklick -> Alle extrahieren).
 2. Den entpackten Ordner FotoWerk an einen dauerhaften Ort legen,
@@ -82,7 +82,7 @@ UPDATE VON 2.9
 FotoWerk schließen, den Inhalt dieses FotoWerk-Ordners in den vorhandenen
 Programmordner kopieren und vorhandene Dateien ersetzen. Die Desktop-Verknüpfung
 bleibt gültig. Es werden keine neuen Python-Bibliotheken benötigt. Nach dem
-Neustart muss FotoWerk 3.13 im Fenstertitel stehen.
+Neustart muss FotoWerk 3.17 im Fenstertitel stehen.
 
 OPTIONALE ORIGINAL-BACKUPS (ab 3.1)
 Checkbox „Originale nach erfolgreichem Speichern in Backup-Unterordner verschieben“:
@@ -196,3 +196,13 @@ Beliebiger Klick: nächste Ecke setzen und bei gedrückter Maus weiterziehen.
 Direkt auf der mittleren Kante ziehen: ganze Kante verschieben und einrasten.
 Die äußeren 10 Prozent jeder Kante gehören zum Eckpunkt; dieser hat Vorrang.
 Kein Modusschalter und keine grünen Erkennungslinien mehr. Kantenfang-Regler bleibt.
+
+NEU IN 3.14: Doppelpfeil senkrecht zur Kante statt Fadenkreuz, sobald diese
+verschoben werden kann. Eckbereiche behalten das Fadenkreuz.
+
+NEU IN 3.15: Doppelt so langer, schlankerer Doppelpfeil mit dünner Kontur.
+
+NEU IN 3.16: Selbst gezeichneter Doppelpfeil mit offenen Spitzen und
+Kantenglättung für eine saubere Darstellung auch bei schrägen Kanten.
+
+NEU IN 3.17: Halbe Pfeillänge (28 Pixel), gleiches Grün wie beim Fadenkreuz.

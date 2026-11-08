@@ -2,7 +2,7 @@
 
 Lokales Desktop-Werkzeug zum Beschneiden und perspektivischen Entzerren fotografierter Bilder. Fotos lassen sich einzeln prüfen, drehen und als Bilddatei oder PDF mit einheitlichen Seitenmaßen speichern.
 
-**Version: 3.13 · Oberfläche: Deutsch · Windows-Startpaket · Python/Tkinter**
+**Version: 3.17 · Oberfläche: Deutsch · Windows-Startpaket · Python/Tkinter**
 
 ## Funktionen
 
@@ -345,7 +345,7 @@ Passende GitHub-Topics:
 
 `python`, `tkinter`, `opencv`, `pillow`, `image-processing`, `photo-cropping`, `perspective-correction`, `image-resizing`, `pdf-export`, `batch-processing`, `desktop-application`, `windows`
 
-Vorgeschlagener Release-Tag: **v3.13.0**.
+Vorgeschlagener Release-Tag: **v3.17.0**.
 
 Für den eigenen Programmcode wurde in diesem Paket keine Projektlizenz festgelegt. Eine gewählte Projektlizenz kann als separate `LICENSE` ergänzt werden. `YUNET_LICENSE.txt` gehört zum Drittanbieter-Modell und ersetzt keine Projektlizenz.
 
@@ -468,3 +468,29 @@ python tests/test_edge_drag.py
 ```bash
 python tests/test_pointer_selection.py
 ```
+
+## Änderungen in 3.14
+
+Sobald die Maus im verschiebbaren mittleren Bereich einer Kante liegt, ersetzt
+ein kleiner cyanfarbener Doppelpfeil das Fadenkreuz. Er steht senkrecht zur
+angezeigten Kante, berücksichtigt Bilddrehung und Perspektive und bleibt beim
+Ziehen sichtbar. Eine dunkle Kontur verbessert die Sichtbarkeit auf hellen Fotos.
+In den 10-%-Eckpunktbereichen und beim Ziehen einzelner Ecken bleibt das bisherige
+Fadenkreuz aktiv. Pfeilausrichtung und automatischer Wechsel wurden getestet.
+
+## Änderungen in 3.15
+
+Doppelpfeil auf 56 statt 28 Bildschirmpixel verlängert. Dünne cyanfarbene Linie
+(1 Pixel), schmale Pfeilspitzen und dezente dunkle Kontur (2 statt 5 Pixel).
+
+## Änderungen in 3.16
+
+Der Doppelpfeil wird vollständig aus fünf Linien mit offenen Spitzen gezeichnet.
+Vierfache Renderauflösung und anschließende Kantenglättung verbessern schräge
+Winkel. Keine Standard-Pfeilspitzen von Tkinter und kein Betriebssystem-Cursor.
+Länge und Bedienlogik bleiben erhalten. Mehrere Winkel wurden visuell geprüft.
+
+## Änderungen in 3.17
+
+Doppelpfeil auf 28 statt 56 Bildschirmpixel verkürzt und im Fadenkreuz-Grün
+`#00e676` gezeichnet. Offene Spitzen und Kantenglättung bleiben erhalten.

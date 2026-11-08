@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FotoWerk 3.13 – Fotos zuschneiden, entzerren und als Bild oder PDF speichern.
+"""FotoWerk 3.17 – Fotos zuschneiden, entzerren und als Bild oder PDF speichern.
 
 Installation: python -m pip install opencv-python-headless Pillow numpy
 Oberfläche: python fotos_beschneiden_v2.py
@@ -63,7 +63,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps, ImageDraw, JpegImagePlugin
 
-APP_VERSION = '3.13'
+APP_VERSION = '3.17'
 
 
 def order_points(points):
@@ -129,6 +129,36 @@ def shift_quad_edge(quad, index, target, width, height):
     result[index]=left;result[(index+1)%4]=right
     try:return valid_quad(result,width,height).astype(np.float64)
     except ValueError:return None
+
+
+def edge_arrow(points, index, pointer, length=28.):
+    """Double-arrow endpoints, normal to the displayed edge; constant screen size."""
+    direction=np.asarray(points[(index+1)%4])-np.asarray(points[index])
+    size=np.linalg.norm(direction)
+    if size<1e-9:return None
+    normal=np.array([-direction[1],direction[0]])/size
+    center=np.asarray(pointer,dtype=float)
+    return np.concatenate((center-normal*length/2,center+normal*length/2))
+
+
+def draw_edge_arrow(points, index, length=28., supersample=4):
+    """Open, hand-drawn chevrons rendered at high resolution for smooth diagonals."""
+    side=76
+    endpoints=edge_arrow(points,index,[side/2,side/2],length)
+    if endpoints is None:return Image.new('RGBA',(side,side))
+    start,end=endpoints.reshape(2,2)
+    direction=(end-start)/length
+    normal=np.array([-direction[1],direction[0]])
+    strokes=[(start,end)]
+    for tip,inward in ((start,direction),(end,-direction)):
+        for sign in (-1,1):
+            strokes.append((tip,tip+inward*9+normal*sign*4.5))
+    image=Image.new('RGBA',(side*supersample,side*supersample))
+    painter=ImageDraw.Draw(image)
+    for color,width in [((18,39,48,210),2.25),((0,230,118,255),1.25)]:
+        for a,b in strokes:
+            painter.line([tuple(a*supersample),tuple(b*supersample)],fill=color,width=round(width*supersample))
+    return image.resize((side,side),Image.Resampling.LANCZOS)
 
 
 def pick_frame_target(points, pointer, tolerance=8., corner_fraction=.1):
@@ -767,7 +797,15 @@ def review(rgb, candidates, title, rotation=0, parent=None, output_settings=None
             return
         x, y = state['pointer']
         cw, ch = canvas.winfo_width(), canvas.winfo_height()
-        if state['drag_side'] is not None:
+        arrow_side=state['drag_side']
+        if arrow_side is None and state['drag'] is None:
+            local=np.array([x,y])-state['offset']
+            if np.all(local>=0) and np.all(local<=[state['pw']-1,state['ph']-1]):
+                kind,index=pick_frame_target(display_points(),[x,y])
+                if kind=='edge':arrow_side=index
+        if arrow_side is not None:
+            state['arrow_photo']=ImageTk.PhotoImage(draw_edge_arrow(display_points(),arrow_side))
+            canvas.create_image(x,y,image=state['arrow_photo'],anchor='center',tags='crosshair')
             show_magnifier()
             return
         lines, active = guide_lines((x, y), display_points(), cw, ch, state['drag'])

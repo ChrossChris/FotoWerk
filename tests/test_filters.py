@@ -42,14 +42,18 @@ class Canvas(Widget):
  def __init__(self,*a,**kw):super().__init__(*a,**kw);canvases.append(self)
  def winfo_width(self):return self.kw['width']
  def winfo_height(self):return self.kw['height']
- def create_image(self,*a,**kw):return 1
+ def create_image(self,*a,**kw):
+  if not hasattr(self,'images'):self.images=[]
+  self.images.append((a,kw));return 1
  def itemconfigure(self,i,**kw):self.picture=kw['image']
  def coords(self,*a):pass
  def delete(self,*a):pass
  def create_polygon(self,*a,**kw):pass
  def create_oval(self,*a,**kw):pass
  def create_text(self,*a,**kw):pass
- def create_line(self,*a,**kw):pass
+ def create_line(self,*a,**kw):
+  if not hasattr(self,'lines'):self.lines=[]
+  self.lines.append((a,kw))
  def create_rectangle(self,*a,**kw):pass
  def focus_force(self):pass
 class Root(Widget):
@@ -110,6 +114,12 @@ class Root(Widget):
   with patch.object(m,'detect',return_value=[]),patch.object(m,'detected_lines',return_value=[np.float64([[20,40],[180,40]])]):
    next(w for w in widgets if w.kw.get('text')=='Schwelle zurücksetzen').kw['command']()
   assert not any(w.kw.get('text') in ('Ganze Kanten verschieben','Erkannte Linien anzeigen') for w in widgets)
+  canvas.lines=[];canvas.images=[]
+  canvas.bindings['<Motion>'](types.SimpleNamespace(x=100,y=16))
+  assert any(kw.get('tags')=='crosshair' for _,kw in canvas.images)
+  canvas.lines=[];canvas.images=[]
+  canvas.bindings['<Motion>'](types.SimpleNamespace(x=25,y=16))
+  assert not any(kw.get('tags')=='crosshair' for _,kw in canvas.images)
   canvas.bindings['<Button-1>'](types.SimpleNamespace(x=100,y=16))
   canvas.bindings['<B1-Motion>'](types.SimpleNamespace(x=100,y=37))
   canvas.bindings['<ButtonRelease-1>'](types.SimpleNamespace(x=100,y=37))

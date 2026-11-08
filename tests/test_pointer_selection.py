@@ -18,3 +18,14 @@ for angle in (0,90,180,270):
   p=points.mean(axis=0)
   assert m.pick_frame_target(points,p)==('corner',int(np.argmin(np.linalg.norm(points-p,axis=1))))
 print('PASS: all edges, 10-percent boundaries, arbitrary click, screen hit tolerance, zoom, four rotations')
+
+for angle in (0,90,180,270):
+ points=m.rotate_points(q,600,600,angle)
+ for i in range(4):
+  center=(points[i]+points[(i+1)%4])/2
+  arrow=m.edge_arrow(points,i,center).reshape(2,2)
+  delta=arrow[1]-arrow[0];edge=points[(i+1)%4]-points[i]
+  assert abs(np.dot(delta,edge))<1e-7
+  assert np.isclose(np.linalg.norm(delta),28)
+  assert np.allclose(arrow.mean(axis=0),center)
+print('PASS: perpendicular centered double arrow with constant screen length in all rotations')
